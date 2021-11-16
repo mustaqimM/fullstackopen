@@ -1,0 +1,15 @@
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over browser:
+the browser sends the note to the server
+end note
+
+server-->browser: HTTP code 201: Created
+
+note over browser:
+The browser doesn't reload.
+It takes over the onsubmit functionality (event handler).
+Adds the note via the DOM-API
+Renders the notes list with the new note
+And POSTs the new note via the sendToServer() function
+end note
