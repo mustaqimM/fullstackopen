@@ -12,6 +12,9 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  const positive = good / (good + bad + neutral) * 100
+  const average = ((good * 1) + (neutral * 0) + (bad * -1)) / (good + neutral + bad)
+
   const submitChoice = (choice) => {
     switch (choice) {
       case 'good':
@@ -28,7 +31,6 @@ const App = () => {
     }
   }
 
-
   return (
     <div>
       <h1>Give feedback</h1>
@@ -39,7 +41,11 @@ const App = () => {
       <h2>good {good}</h2>
       <h2>neutral {neutral}</h2>
       <h2>bad {bad}</h2>
-    </div>
+
+      <h3>all {good + neutral + bad}</h3>
+      <h3>average {average}</h3>
+      <h3>postive {positive}%</h3>
+    </div >
   )
 }
 export default App
