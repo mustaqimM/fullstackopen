@@ -7,6 +7,12 @@ const Button = ({ handleClick, text }) => {
 }
 
 const Statistics = ({ sum, positive, average }) => {
+  if (sum === 0) {
+    return (
+      <div>
+        <h3>No feedback given</h3>
+      </div>)
+  }
   return (
     <div>
       <h3>all {sum}</h3>
