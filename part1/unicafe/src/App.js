@@ -6,7 +6,13 @@ const Button = ({ handleClick, text }) => {
   )
 }
 
-const Statistics = ({ sum, positive, average }) => {
+const StatisticLine = ({ text, value }) => {
+  return (
+    <h3>{text} {value}</h3>
+  )
+}
+
+const Statistics = ({ good, neutral, bad, sum, positive, average }) => {
   if (sum === 0) {
     return (
       <div>
@@ -15,9 +21,12 @@ const Statistics = ({ sum, positive, average }) => {
   }
   return (
     <div>
-      <h3>all {sum}</h3>
-      <h3>average {average}</h3>
-      <h3>postive {positive}%</h3>
+      <StatisticLine text="Good" value={good} />
+      <StatisticLine text="Neutral" value={neutral} />
+      <StatisticLine text="Bad" value={bad} />
+      <StatisticLine text="Sum" value={sum} />
+      <StatisticLine text="Average" value={average} />
+      <StatisticLine text="Positive" value={positive + "%"} />
     </div>
   )
 
@@ -32,6 +41,10 @@ const App = () => {
   const sum = good + neutral + bad
   const positive = good / (sum) * 100
   const average = ((good * 1) + (neutral * 0) + (bad * -1)) / (sum)
+
+  const statProps = {
+    good, neutral, bad, sum, positive, average
+  }
 
   const submitChoice = (choice) => {
     switch (choice) {
@@ -56,12 +69,7 @@ const App = () => {
       <Button handleClick={() => submitChoice("neutral")} text="Neutral" />
       <Button handleClick={() => submitChoice("bad")} text="Bad" />
 
-      <h2>good {good}</h2>
-      <h2>neutral {neutral}</h2>
-      <h2>bad {bad}</h2>
-
-      <Statistics sum={sum} positive={positive} average={average} />
-
+      <Statistics {...statProps} />
     </div >
   )
 }
