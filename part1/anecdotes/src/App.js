@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
 
+const Votes = ({ votes, selected }) => {
+  return (
+    <h3>has {votes[selected]}</h3>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -12,6 +18,7 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
   const getRandInt = (min, max) => {
     min = Math.ceil(min)
@@ -19,13 +26,26 @@ const App = () => {
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
+  const handleNextQuote = () => {
+    setSelected(getRandInt(0, 6))
+  }
+
+  const handleVoteClick = () => {
+    const newVotes = [...votes]
+    newVotes[selected] += 1
+    setVotes(newVotes)
+  }
+
   return (
     <div>
       <p>
         {anecdotes[selected]}
       </p>
-      <button onClick={() => setSelected(getRandInt(0, 6))}>Next quote</button>
-    </div>
+      <button onClick={handleNextQuote}>Next quote</button>
+      <button onClick={handleVoteClick}>Vote</button>
+
+      <Votes votes={votes} selected={selected} />
+    </div >
   )
 }
 
