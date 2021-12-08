@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
 
+const Quote = ({ anecdotes, votes }) => {
+  const index = votes.reduce((prevVal, currVal, currIndex, votes) => currVal > votes[prevVal] ? currIndex : prevVal, 0);
+  return (
+    <h1>{anecdotes[index]}</h1>
+  )
+}
+
 const Votes = ({ votes, selected }) => {
   return (
     <h3>has {votes[selected]}</h3>
@@ -38,12 +45,11 @@ const App = () => {
 
   return (
     <div>
-      <p>
-        {anecdotes[selected]}
-      </p>
+      <Quote anecdotes={anecdotes} votes={votes} />
       <button onClick={handleNextQuote}>Next quote</button>
       <button onClick={handleVoteClick}>Vote</button>
 
+      <p> {anecdotes[selected]} </p>
       <Votes votes={votes} selected={selected} />
     </div >
   )
