@@ -23,13 +23,13 @@ const App = () => {
     filter === ''
       ? countries
       : countries.filter((country) =>
-        country.name.common.toLowerCase().includes(filter),
-      )
+          country.name.common.toLowerCase().includes(filter),
+        )
 
   return (
     <div>
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
-      <List countriesToShow={countriesToShow} />
+      <List countriesToShow={countriesToShow} setFilter={setFilter} />
     </div>
   )
 }
