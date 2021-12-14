@@ -2,6 +2,11 @@
   "extends": [
     "eslint:recommended",
     "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
   ],
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error"
+  }
 }
