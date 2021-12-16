@@ -22,11 +22,14 @@ const App = () => {
   const addNote = (event) => {
     event.preventDefault()
     const noteObject = {
-      id: notes.length + 1,
       content: newNote,
       date: new Date().toISOString(),
       important: Math.random < 0.5,
     }
+
+    axios.post('http://localhost:3001/notes', noteObject).then((response) => {
+      console.log(response)
+    })
 
     setNotes(notes.concat(noteObject))
     setNewNote('')
@@ -43,7 +46,7 @@ const App = () => {
       <h1>Notes</h1>
       <ul>
         {notesToShow.map((note) => (
-          <Note key={note.id} note={note} />
+          <Note key={note.id} content={note.content} />
         ))}
       </ul>
       <form onSubmit={addNote}>
