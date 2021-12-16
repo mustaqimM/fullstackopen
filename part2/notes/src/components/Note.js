@@ -1,9 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const Note = ({ content }) => <li>{content}</li>
-Note.propTypes = {
-  content: PropTypes.string.isRequired
+const Note = ({ note, toggleImportance }) => {
+  const label = note.important ? 'make not important' : 'make important'
+
+  return (
+    <div>
+      <li>{note.content}</li>
+      <button onClick={toggleImportance}>{label}</button>
+    </div>
+  )
 }
 
 export default Note
