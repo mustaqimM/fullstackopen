@@ -1,5 +1,5 @@
  {
-   "extends": ["eslint:recommended", "plugin:react/recommended"],
+   "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
    "plugins": ["react-hooks"],
    "parser": "babel-eslint",
    "rules": {

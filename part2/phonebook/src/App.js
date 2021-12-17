@@ -27,8 +27,23 @@ const App = () => {
       number: newNumber,
     }
 
-    if (persons.find((person) => person.name === newName)) {
+    if (persons.find((person) => person.name === newName && person.number === newNumber)) {
       alert(`${newName} is already added to the phonebook`)
+      return
+    }
+
+    if (persons.find((person) => person.name === newName && person.number !== newNumber)) {
+      const id = persons.findIndex( (person) => person.name === newName && person.number !== newNumber) + 1
+
+      if ( window.confirm( `${newName} is already added to the phonebook, replace the old number with a new one?`)) {
+        phonebookService.update(id, personObject).then((returnedPerson) => {
+          setPersons(
+            persons.map((person) =>
+              person.id !== id ? person : returnedPerson
+            )
+          )
+        })
+      }
       return
     }
 
