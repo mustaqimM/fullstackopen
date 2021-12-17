@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import phonebookService from './services/phonebook'
 
 import Persons from './components/Persons'
 import Filter from './components/Filter'
@@ -12,9 +12,9 @@ const App = () => {
   const [findPerson, setFindPerson] = useState('')
 
   const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then((response) => setPersons(response.data))
+    phonebookService
+      .getAll()
+      .then((initialPersons) => setPersons(initialPersons))
   }
 
   useEffect(hook, [])
@@ -32,9 +32,11 @@ const App = () => {
       return
     }
 
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+    phonebookService.create(personObject).then((returnedPerson) => {
+      setPersons(persons.concat(returnedPerson))
+      setNewName('')
+      setNewNumber('')
+    })
   }
 
   const handlePersonChange = (event) => {
@@ -53,8 +55,8 @@ const App = () => {
     findPerson === ''
       ? persons
       : persons.filter((person) =>
-        person.name.toLowerCase().includes(findPerson),
-      )
+          person.name.toLowerCase().includes(findPerson)
+        )
 
   return (
     <div>
