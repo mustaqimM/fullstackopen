@@ -51,6 +51,13 @@ const App = () => {
     setFindPerson(event.target.value)
   }
 
+  const handleDelete = (id, name) => {
+    if (window.confirm(`Delete ${name}?`)) {
+      phonebookService.deletePerson(id, name)
+      setPersons(persons.filter((person) => person.id !== id))
+    }
+  }
+
   const personsToShow =
     findPerson === ''
       ? persons
@@ -75,7 +82,7 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons personsToShow={personsToShow} />
+      <Persons personsToShow={personsToShow} handleDelete={handleDelete} />
     </div>
   )
 }
