@@ -4,12 +4,14 @@ import phonebookService from './services/phonebook'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('add a person')
   const [newNumber, setNewNumber] = useState('add a number')
   const [findPerson, setFindPerson] = useState('')
+  const [message, setMessage] = useState('')
 
   const hook = () => {
     phonebookService
@@ -27,21 +29,42 @@ const App = () => {
       number: newNumber,
     }
 
-    if (persons.find((person) => person.name === newName && person.number === newNumber)) {
+    if (
+      persons.find(
+        (person) => person.name === newName && person.number === newNumber
+      )
+    ) {
       alert(`${newName} is already added to the phonebook`)
       return
     }
 
-    if (persons.find((person) => person.name === newName && person.number !== newNumber)) {
-      const id = persons.findIndex( (person) => person.name === newName && person.number !== newNumber) + 1
+    if (
+      persons.find(
+        (person) => person.name === newName && person.number !== newNumber
+      )
+    ) {
+      const id =
+        persons.findIndex(
+          (person) => person.name === newName && person.number !== newNumber
+        ) + 1
 
-      if ( window.confirm( `${newName} is already added to the phonebook, replace the old number with a new one?`)) {
+      if (
+        window.confirm(
+          `${newName} is already added to the phonebook, replace the old number with a new one?`
+        )
+      ) {
         phonebookService.update(id, personObject).then((returnedPerson) => {
           setPersons(
             persons.map((person) =>
               person.id !== id ? person : returnedPerson
             )
           )
+          setNewName('')
+          setNewNumber('')
+          setMessage(`Changed: ${returnedPerson.name}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 2000)
         })
       }
       return
@@ -51,6 +74,11 @@ const App = () => {
       setPersons(persons.concat(returnedPerson))
       setNewName('')
       setNewNumber('')
+
+      setMessage(`Added: ${returnedPerson.name}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 2000)
     })
   }
 
@@ -83,6 +111,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={message} />
 
       <Filter findPerson={findPerson} handleFindPerson={handleFindPerson} />
 
