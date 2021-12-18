@@ -7,19 +7,48 @@ const Notification = ({ message }) => {
     borderStyle: 'solid',
     padding: 10,
     marginBottom: 10,
+    fontSize: 20,
   }
   const successStyle = {
     color: 'green',
-    fontSize: 20,
+  }
+  const updateStyle = {
+    color: 'yellow',
+  }
+  const errorStyle = {
+    color: 'red',
   }
 
-  if (message === null) {
+  if (message === '') {
     return null
+  }
+
+  if (message.includes('Added')) {
+    return (
+      <div style={boxStyle}>
+        <div style={successStyle}>{message}</div>
+      </div>
+    )
+  }
+  if (message.includes('Error')) {
+    return (
+      <div style={boxStyle}>
+        <div style={errorStyle}>{message}</div>
+      </div>
+    )
+  }
+  if (message.includes('Updated')) {
+    return (
+      <div style={boxStyle}>
+        UP
+        <div style={updateStyle}>{message}</div>
+      </div>
+    )
   }
 
   return (
     <div style={boxStyle}>
-      <div style={successStyle}>{message}</div>
+      <div>{message}</div>
     </div>
   )
 }

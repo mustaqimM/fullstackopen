@@ -53,19 +53,32 @@ const App = () => {
           `${newName} is already added to the phonebook, replace the old number with a new one?`
         )
       ) {
-        phonebookService.update(id, personObject).then((returnedPerson) => {
-          setPersons(
-            persons.map((person) =>
-              person.id !== id ? person : returnedPerson
+        phonebookService
+          .update(id, personObject)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== id ? person : returnedPerson
+              )
             )
-          )
-          setNewName('')
-          setNewNumber('')
-          setMessage(`Changed: ${returnedPerson.name}`)
-          setTimeout(() => {
-            setMessage(null)
-          }, 2000)
-        })
+            setNewName('')
+            setNewNumber('')
+            setMessage(`Changed ${personObject.name}`)
+            console.log(message)
+            setTimeout(() => {
+              setMessage('')
+            }, 2000)
+          })
+          .catch((error) => {
+            console.log(error)
+            setPersons(persons.filter((person) => person.id !== id))
+            setMessage(
+              `Error: Person ${personObject.name} has already been removed deleted`
+            )
+            setTimeout(() => {
+              setMessage('')
+            }, 2000)
+          })
       }
       return
     }
@@ -77,7 +90,7 @@ const App = () => {
 
       setMessage(`Added: ${returnedPerson.name}`)
       setTimeout(() => {
-        setMessage(null)
+        setMessage('')
       }, 2000)
     })
   }
