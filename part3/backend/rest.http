@@ -1,0 +1,15 @@
+# GET notes
+GET http://localhost:3001/api/notes
+
+# DELETE notes/(:id)
+:id = 3
+DELETE http://localhost:3001/api/notes/:id
+
+# POST note
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "restclient!",
+    "important": true
+}
