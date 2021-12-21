@@ -70,9 +70,15 @@ app.post('/api/persons', (request, response) => {
   const body = request.body
   const id = Math.floor(Math.random() * 100)
 
-  if (!body.name) {
+  if (!body.name || !body.number) {
     return response.status(400).json({
-      error: 'Person not found'
+      error: 'POST name/number cannot be blank!'
+    })
+  }
+
+  if (persons.find(person => person.name === body.name)) {
+    return response.status(400).json({
+      error: 'Person already exists'
     })
   }
 
