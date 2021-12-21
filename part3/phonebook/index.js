@@ -30,10 +30,12 @@ app.get('/', (request, response) => {
   response.send('<h1>TEST</h1>')
 })
 
+// GET persons
 app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
 
+// GET db info
 app.get('/info', (request, response) => {
   const time = new Date()
   response.send(`
@@ -43,6 +45,7 @@ app.get('/info', (request, response) => {
     <div>`)
 })
 
+// GET person
 app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   const person = persons.find(person => person.id === id)
@@ -54,13 +57,35 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
+// DELETE person
 app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   persons = persons.filter(person => person.id !== id)
 
   response.status(202).end()
-
 })
+
+// POST person
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+  const id = Math.floor(Math.random() * 100)
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: 'Person not found'
+    })
+  }
+
+  const person = {
+    id: id,
+    name: body.name,
+    number: body.number
+  }
+
+  persons = persons.concat(person)
+  response.json(person)
+})
+
 
 const PORT = 3001
 app.listen(PORT, () => {

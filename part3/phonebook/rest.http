@@ -11,3 +11,12 @@ GET http://localhost:3001/api/persons/:id
 # DELETE person (:id)
 :id = 4
 DELETE http://localhost:3001/api/persons/:id
+
+# POST person
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Desmond",
+    "number": "001"
+}
