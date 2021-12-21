@@ -1,2 +1,9 @@
 # GET persons
 GET http://localhost:3001/api/persons
+
+# GET db info
+GET http://localhost:3001/info
+
+# GET person
+:id = 4
+GET http://localhost:3001/api/persons/:id
