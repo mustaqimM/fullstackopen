@@ -4,6 +4,7 @@ const cors = require('cors')
 
 app.use(cors())
 app.use(express.json())
+app.use(express.static('build'))
 
 let notes = [
   { id: 1, content: "HTML is easy", date: "2019-05-30T17:30:31.098Z", important: true },

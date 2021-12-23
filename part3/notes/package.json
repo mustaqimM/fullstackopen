@@ -20,17 +20,10 @@
     "server": "json-server -p3001 --watch db.json"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -46,5 +39,6 @@
     "eslint-plugin-react": "^7.27.1",
     "json-server": "^0.17.0",
     "prettier": "2.5.1"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }
