@@ -11,6 +11,8 @@
   "author": "mustaqim",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^8.5.0",
+    "eslint-plugin-react": "^7.28.0",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
