@@ -70,26 +70,25 @@ app.get('/info', (request, response) => {
 })
 
 // GET person
-app.get('/api/persons/:id', (request, response) => {
-  Person.findById(request.params.id).then(person => {
-    response.json(person)
-  })
-  // const id = Number(request.params.id)
-  // const person = persons.find(person => person.id === id)
-
-  // if (person) {
-  //   response.json(person)
-  // } else {
-  //   response.status(404).end()
-  // }
+app.get('/api/persons/:id', (request, response, next) => {
+  Person.findById(request.params.id)
+    .then(person => {
+      if (person) {
+        response.json(person)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => next(error))
 })
 
 // DELETE person
-app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
-
-  response.status(202).end()
+app.delete('/api/persons/:id', (request, response, next) => {
+  Person.findByIdAndRemove(request.params.id)
+    .then(result => {
+      response.status(202).end()
+    })
+    .catch(error => next(error))
 })
 
 // POST person

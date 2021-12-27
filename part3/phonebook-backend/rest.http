@@ -5,11 +5,11 @@ GET http://localhost:3001/api/persons
 GET http://localhost:3001/info
 
 # GET person (:id)
-:id = 1
+:id = 61c997dac57bc1499fb27c30
 GET http://localhost:3001/api/persons/:id
 
 # DELETE person (:id)
-:id = 1
+:id = 61c997dac57bc1499fb27c30
 DELETE http://localhost:3001/api/persons/:id
 
 # POST person
