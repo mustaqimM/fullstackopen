@@ -20,3 +20,13 @@ Content-Type: application/json
     "name": "Desmond",
     "number": "001"
 }
+
+# PUT person (:id)
+:id = 61c99738c10080d54fef221f
+PUT http://localhost:3001/api/persons/:id
+Content-Type: application/json
+
+{
+    "name": "Desmond",
+    "number": "002"
+}

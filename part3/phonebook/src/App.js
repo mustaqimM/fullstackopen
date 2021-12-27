@@ -29,55 +29,30 @@ const App = () => {
       number: newNumber,
     }
 
-    if (
-      persons.find(
-        (person) => person.name === newName && person.number === newNumber
-      )
-    ) {
+    if (persons.find((person) => person.name === newName && person.number === newNumber)) {
       alert(`${newName} is already added to the phonebook`)
       return
     }
 
-    if (
-      persons.find(
-        (person) => person.name === newName && person.number !== newNumber
-      )
-    ) {
-      const id =
-        persons.findIndex(
-          (person) => person.name === newName && person.number !== newNumber
-        ) + 1
+    if (persons.find((person) => person.name === newName && person.number !== newNumber)) {
+      const foundPerson = persons.find((person) => person.name === newName)
 
-      if (
-        window.confirm(
-          `${newName} is already added to the phonebook, replace the old number with a new one?`
-        )
-      ) {
+      if (window.confirm(`${newName} is already added to the phonebook, replace the old number with a new one?`)) {
         phonebookService
-          .update(id, personObject)
+          .update(foundPerson.id, personObject)
           .then((returnedPerson) => {
-            setPersons(
-              persons.map((person) =>
-                person.id !== id ? person : returnedPerson
-              )
-            )
+            setPersons(persons.map((person) => person.id !== foundPerson.id ? person : returnedPerson))
             setNewName('')
             setNewNumber('')
             setMessage(`Changed ${personObject.name}`)
             console.log(message)
-            setTimeout(() => {
-              setMessage('')
-            }, 2000)
+            setTimeout(() => { setMessage('') }, 2000)
           })
           .catch((error) => {
             console.log(error)
-            setPersons(persons.filter((person) => person.id !== id))
-            setMessage(
-              `Error: Person ${personObject.name} has already been removed deleted`
-            )
-            setTimeout(() => {
-              setMessage('')
-            }, 2000)
+            setPersons(persons.filter((person) => person.id !== foundPerson.id))
+            setMessage(`Error: Person ${personObject.name} has already been removed deleted`)
+            setTimeout(() => { setMessage('') }, 2000)
           })
       }
       return
@@ -118,8 +93,8 @@ const App = () => {
     findPerson === ''
       ? persons
       : persons.filter((person) =>
-          person.name.toLowerCase().includes(findPerson)
-        )
+        person.name.toLowerCase().includes(findPerson)
+      )
 
   return (
     <div>
