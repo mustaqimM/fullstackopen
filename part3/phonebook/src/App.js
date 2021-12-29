@@ -45,8 +45,8 @@ const App = () => {
           })
           .catch((error) => {
             console.log(error)
-            setPersons(persons.filter((person) => person.id !== foundPerson.id))
-            setMessage(`Error: Person ${personObject.name} has already been removed deleted`)
+            // setPersons(persons.filter((person) => person.id !== foundPerson.id))
+            setMessage(`Error: ${error.response.data.error}`)
             setTimeout(() => { setMessage('') }, 2000)
           })
       }
