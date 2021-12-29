@@ -18,15 +18,15 @@ Content-Type: application/json
 
 {
     "name": "Desmond",
-    "number": "001"
+    "number": "012-123-4567"
 }
 
 # PUT person (:id)
-:id = 61c99738c10080d54fef221f
+:id = 61cb530378c807c250ccfe4c
 PUT http://localhost:3001/api/persons/:id
 Content-Type: application/json
 
 {
-    "name": "Desmond",
-    "number": "002"
+    "name": "Ezio",
+    "number": "011-065-0070"
 }
