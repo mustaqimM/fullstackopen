@@ -29,11 +29,6 @@ const App = () => {
       number: newNumber,
     }
 
-    if (persons.find((person) => person.name === newName && person.number === newNumber)) {
-      alert(`${newName} is already added to the phonebook`)
-      return
-    }
-
     if (persons.find((person) => person.name === newName && person.number !== newNumber)) {
       const foundPerson = persons.find((person) => person.name === newName)
 
@@ -58,16 +53,21 @@ const App = () => {
       return
     }
 
-    phonebookService.create(personObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson))
-      setNewName('')
-      setNewNumber('')
+    phonebookService.create(personObject)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
 
-      setMessage(`Added: ${returnedPerson.name}`)
-      setTimeout(() => {
-        setMessage('')
-      }, 2000)
-    })
+        setMessage(`Added: ${returnedPerson.name}`)
+        setTimeout(() => {
+          setMessage('')
+        }, 2000)
+      })
+      .catch(error => {
+        console.log(error.response.data.error)
+        setMessage(`Error: ${error.response.data.error}`)
+      })
   }
 
   const handlePersonChange = (event) => {
