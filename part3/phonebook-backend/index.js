@@ -14,17 +14,20 @@ morgan.token('body', (req, res) => {
     return JSON.stringify(req.body)
   }
 })
-app.use(morgan((tokens, req, res) => {
-  return [
-    tokens.method(req, res),
-    tokens.url(req, res),
-    tokens.status(req, res),
-    tokens.res(req, res, 'content-length'), '-',
-    tokens['response-time'](req, res), 'ms',
-    tokens.body(req, res)
-  ].join(' ')
-}))
-
+app.use(
+  morgan((tokens, req, res) => {
+    return [
+      tokens.method(req, res),
+      tokens.url(req, res),
+      tokens.status(req, res),
+      tokens.res(req, res, 'content-length'),
+      '-',
+      tokens['response-time'](req, res),
+      'ms',
+      tokens.body(req, res),
+    ].join(' ')
+  })
+)
 
 app.get('/', (request, response) => {
   response.send('<h1>TEST</h1>')
@@ -32,7 +35,7 @@ app.get('/', (request, response) => {
 
 // GET persons
 app.get('/api/persons', (request, response) => {
-  Person.find({}).then(persons => {
+  Person.find({}).then((persons) => {
     response.json(persons)
   })
 })
@@ -40,7 +43,7 @@ app.get('/api/persons', (request, response) => {
 // GET db info
 app.get('/info', (request, response) => {
   const time = new Date()
-  Person.countDocuments({}).then(count => {
+  Person.countDocuments({}).then((count) => {
     response.send(`
     <div>
       <h1>Phonebook has info for ${count} people</h1>
@@ -52,23 +55,23 @@ app.get('/info', (request, response) => {
 // GET person
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
-    .then(person => {
+    .then((person) => {
       if (person) {
         response.json(person)
       } else {
         response.status(404).end()
       }
     })
-    .catch(error => next(error))
+    .catch((error) => next(error))
 })
 
 // DELETE person
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-    .then(result => {
+    .then((result) => {
       response.status(202).end()
     })
-    .catch(error => next(error))
+    .catch((error) => next(error))
 })
 
 // POST person
@@ -77,20 +80,21 @@ app.post('/api/persons', (request, response, next) => {
 
   if (!body.name || !body.number) {
     return response.status(400).json({
-      error: 'POST name/number cannot be blank!'
+      error: 'POST name/number cannot be blank!',
     })
   }
 
   const person = new Person({
     name: body.name,
-    number: body.number
+    number: body.number,
   })
 
-  person.save()
-    .then(savedPerson => {
+  person
+    .save()
+    .then((savedPerson) => {
       response.json(savedPerson)
     })
-    .catch(error => next(error))
+    .catch((error) => next(error))
 })
 
 // Update person
@@ -99,14 +103,14 @@ app.put('/api/persons/:id', (request, response, next) => {
 
   const person = {
     name: body.name,
-    number: body.number
+    number: body.number,
   }
   const opts = { runValidators: true }
   Person.findByIdAndUpdate(request.params.id, person, { new: true, ...opts })
-    .then(updatedPerson => {
+    .then((updatedPerson) => {
       response.json(updatedPerson)
     })
-    .catch(error => next(error))
+    .catch((error) => next(error))
 })
 
 // Handle non-existant routes
@@ -129,5 +133,5 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-  console.log(`Running server on port: ${PORT}`);
+  console.log(`Running server on port: ${PORT}`)
 })
